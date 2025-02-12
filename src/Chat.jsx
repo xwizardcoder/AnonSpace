@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io("https://chat-app-backend.onrender.com");
+const socket = io("https://chat-app-backend-kvih.onrender.com", {
+  transports: ["websocket"], // ✅ Ensures only WebSocket is used
+  reconnectionAttempts: 5,   // ✅ Try reconnecting up to 5 times
+  reconnectionDelay: 1000    // ✅ Wait 1 second before retrying
+});
 
 
 const Chat = () => {
