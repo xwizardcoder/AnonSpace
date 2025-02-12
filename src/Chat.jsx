@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:3001"); // Connect to backend
+const socket = io("https://chat-app-backend-kvih.onrender.com"); // Connect to backend
 
 const Chat = ({ username }) => {
   const [message, setMessage] = useState("");
