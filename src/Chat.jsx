@@ -1,74 +1,57 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
-const socket = io("https://chat-app-backend-kvih.onrender.com", {
-  transports: ["websocket"], // ✅ Ensures only WebSocket is used
-  reconnectionAttempts: 5,   // ✅ Try reconnecting up to 5 times
-  reconnectionDelay: 1000    // ✅ Wait 1 second before retrying
-});
+const socket = io("http://localhost:3001"); // Connect to backend
 
-
-const Chat = () => {
-  const [username, setUsername] = useState("");
+const Chat = ({ username }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
+    socket.emit("user_joined", username); // Notify server when user joins
+
     socket.on("receive_message", (data) => {
       setMessages((prev) => [...prev, data]);
     });
 
-    return () => socket.off("receive_message");
-  }, []);
-
-  const joinChat = () => {
-    if (username.trim()) {
-      socket.emit("join_chat", username);
-      setJoined(true);
-    }
-  };
+    return () => {
+      socket.off("receive_message");
+    };
+  }, [username]);
 
   const sendMessage = () => {
-    if (message.trim()) {
-      const messageData = { username, message };
-      socket.emit("send_message", messageData);
+    if (message.trim() !== "") {
+      const data = { username, message };
+      socket.emit("send_message", data);
       setMessage("");
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
-    <div>
-      {!joined ? (
-        <div>
-          <h2>Enter your name to join the chat</h2>
-          <input
-            type="text"
-            placeholder="Your name..."
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <button onClick={joinChat}>Join</button>
-        </div>
-      ) : (
-        <div>
-          <h2>Chat Room</h2>
-          <div>
-            {messages.map((msg, index) => (
-              <p key={index}>
-                <strong>{msg.username}:</strong> {msg.message}
-              </p>
-            ))}
+    <div className="main">
+      <div className="chat-box">
+        {messages.map((msg, index) => (
+          <div key={index}>
+            <strong>{msg.username}:</strong> {msg.message}
           </div>
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type a message..."
-          />
-          <button onClick={sendMessage}>Send</button>
-        </div>
-      )}
+        ))}
+      </div>
+      <div className="box-content">
+        <input
+          type="text"
+          placeholder="Type a message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyPress} // Listen for Enter key
+        />
+        <button onClick={sendMessage}>Send</button>
+      </div>
     </div>
   );
 };
