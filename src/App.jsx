@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Chat from "./Chat";
 import Header from "./Header";
-import footer from "./Footer";
 import Footer from "./Footer";
 import "./App.css";
 
@@ -15,7 +14,11 @@ const App = () => {
 
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-4 py-10">
         
-        <div className="w-full max-w-md bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-6 md:p-8">
+        <div
+          className={`w-full ${
+            joined ? "max-w-6xl h-[85vh]" : "max-w-md"
+          } bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-6 md:p-8 transition-all duration-300`}
+        >
           
           {!joined ? (
             <div className="flex flex-col gap-6">
@@ -45,12 +48,15 @@ const App = () => {
               </button>
             </div>
           ) : (
-            <Chat username={username} />
+            <div className="h-full">
+              <Chat username={username} />
+            </div>
           )}
         </div>
 
       </div>
-      <Footer/>
+
+      <Footer />
     </>
   );
 };
