@@ -9,55 +9,59 @@ const App = () => {
   const [joined, setJoined] = useState(false);
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
-      
-      <Header />
-
-      <main className="flex-1 overflow-hidden flex items-center justify-center px-4 py-4">
+    <>
+      <div className="h-screen overflow-hidden flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
         
-        <div
-          className={`w-full ${
-            joined ? "max-w-6xl h-full" : "max-w-md"
-          } bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-6 md:p-8 transition-all duration-300 overflow-hidden`}
-        >
+        <Header />
+
+        <div className="flex-1 flex items-center justify-center px-4 py-4 overflow-hidden">
           
-          {!joined ? (
-            <div className="flex flex-col gap-6">
-              
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-white mb-2">
-                  Welcome Back
-                </h2>
+          <div
+            className={`w-full ${
+              joined ? "max-w-6xl h-full" : "max-w-md"
+            } bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-6 md:p-8 transition-all duration-300 overflow-hidden`}
+          >
+            
+            {!joined ? (
+              <div className="flex flex-col gap-6">
+                
+                <div className="text-center">
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    Welcome Back
+                  </h2>
 
-                <p className="text-slate-300 text-sm md:text-base">
-                  Join the anonymous help community and start chatting.
-                </p>
+                  <p className="text-slate-300 text-sm md:text-base">
+                    Join the anonymous help community and start chatting.
+                  </p>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Enter your name..."
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 border border-slate-500 text-white placeholder:text-slate-300 outline-none focus:ring-2 focus:ring-cyan-400 transition duration-300"
+                />
+
+                <button
+                  onClick={() => setJoined(true)}
+                  className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold py-3 rounded-xl transition duration-300 shadow-lg hover:scale-[1.02]"
+                >
+                  Join Chat
+                </button>
               </div>
+            ) : (
+              <div className="h-full overflow-hidden">
+                <Chat username={username} />
+              </div>
+            )}
+          </div>
 
-              <input
-                type="text"
-                placeholder="Enter your name..."
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-slate-500 text-white placeholder:text-slate-300 outline-none focus:ring-2 focus:ring-cyan-400 transition duration-300"
-              />
-
-              <button
-                onClick={() => setJoined(true)}
-                className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold py-3 rounded-xl transition duration-300 shadow-lg hover:scale-[1.02]"
-              >
-                Join Chat
-              </button>
-            </div>
-          ) : (
-            <div className="h-full overflow-hidden">
-              <Chat username={username} />
-            </div>
-          )}
         </div>
 
-      </main>
+        <Footer />
 
-    </div>
+      </div>
+    </>
   );
 };
 
