@@ -58,7 +58,7 @@ const Chat = ({ username }) => {
         <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 bg-gradient-to-b from-slate-900/40 to-slate-950/60">
+      <div className="flex-1 overflow-y-auto scrollbar-hide px-4 py-5 space-y-4 bg-gradient-to-b from-slate-900/40 to-slate-950/60">
         
         {messages.length === 0 ? (
           <div className="h-full flex items-center justify-center text-slate-400 text-center">
