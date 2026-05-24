@@ -3,6 +3,7 @@ import Chat from "./Chat";
 import Header from "./Header";
 import footer from "./Footer";
 import Footer from "./Footer";
+import "./App.css";
 
 const App = () => {
   const [username, setUsername] = useState("");
