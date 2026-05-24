@@ -6,7 +6,7 @@ function Header() {
           
           <div className="right">
             <h3 className="text-2xl md:text-3xl font-bold tracking-wide text-center md:text-left">
-              ANONYMOUS HELP FORUM
+              AnonSpace
             </h3>
           </div>
 
