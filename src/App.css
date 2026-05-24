@@ -1,3 +1,4 @@
+@import "tailwindcss";
 .box{
   display: flex;
   flex-direction: column;
