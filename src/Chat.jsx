@@ -31,7 +31,9 @@ const Chat = ({ username }) => {
   const sendMessage = () => {
     if (message.trim() !== "") {
       const data = { username, message };
+
       socket.emit("send_message", data);
+
       setMessage("");
     }
   };
@@ -43,29 +45,44 @@ const Chat = ({ username }) => {
   };
 
   return (
-    <div className="w-full h-[75vh] flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl">
+    <div className="w-full h-full flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
       
-      <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-white/5">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-white/5 backdrop-blur-xl">
+        
         <div>
-          <h2 className="text-white text-xl font-bold">
+          <h2 className="text-white text-2xl font-bold tracking-wide">
             Community Chat
           </h2>
 
-          <p className="text-slate-300 text-sm">
-            Connected as {username}
+          <p className="text-slate-400 text-sm mt-1">
+            Connected as @{username}
           </p>
         </div>
 
-        <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+
+          <span className="text-slate-300 text-sm hidden sm:block">
+            Online
+          </span>
+        </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto scrollbar-hide px-4 py-5 space-y-4 bg-gradient-to-b from-slate-900/40 to-slate-950/60">
+      <div className="flex-1 overflow-y-auto scrollbar-hide px-4 md:px-6 py-6 space-y-5 bg-gradient-to-b from-slate-900/20 to-slate-950/40">
         
         {messages.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-slate-400 text-center">
-            <p>
-              No messages yet. <br />
-              Start the conversation
+          <div className="h-full flex flex-col items-center justify-center text-center">
+            
+            <div className="w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center mb-5">
+              <span className="text-4xl">💬</span>
+            </div>
+
+            <h3 className="text-white text-xl font-semibold mb-2">
+              No Messages Yet
+            </h3>
+
+            <p className="text-slate-400 max-w-sm leading-relaxed">
+              Start the conversation and connect with people in the anonymous community.
             </p>
           </div>
         ) : (
@@ -79,17 +96,23 @@ const Chat = ({ username }) => {
               }`}
             >
               <div
-                className={`max-w-[85%] md:max-w-[70%] px-4 py-3 rounded-2xl shadow-lg ${
+                className={`relative max-w-[85%] md:max-w-[70%] px-5 py-4 rounded-3xl shadow-xl transition-all duration-300 ${
                   msg.username === username
-                    ? "bg-cyan-500 text-slate-900 rounded-br-md"
-                    : "bg-white/10 text-white rounded-bl-md border border-white/10"
+                    ? "bg-cyan-500 text-slate-950 rounded-br-md"
+                    : "bg-white/10 text-white rounded-bl-md border border-white/10 backdrop-blur-lg"
                 }`}
               >
-                <p className="text-xs font-semibold mb-1 opacity-80">
+                <p
+                  className={`text-xs font-semibold mb-2 ${
+                    msg.username === username
+                      ? "text-slate-800"
+                      : "text-cyan-300"
+                  }`}
+                >
                   {msg.username}
                 </p>
 
-                <p className="break-words text-sm md:text-base">
+                <p className="break-words text-sm md:text-base leading-relaxed">
                   {msg.message}
                 </p>
               </div>
@@ -100,21 +123,22 @@ const Chat = ({ username }) => {
         <div ref={messagesEndRef}></div>
       </div>
 
-      <div className="p-4 border-t border-white/10 bg-slate-900/70">
+      <div className="p-4 md:p-5 border-t border-white/10 bg-slate-950/40 backdrop-blur-xl">
+        
         <div className="flex items-center gap-3">
           
           <input
             type="text"
-            placeholder="Type your message..."
+            placeholder="Write a message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyPress}
-            className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-slate-600 text-white placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-cyan-400 transition duration-300"
+            className="flex-1 h-14 px-5 rounded-2xl bg-white/10 border border-white/10 text-white placeholder:text-slate-400 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-all duration-300"
           />
 
           <button
             onClick={sendMessage}
-            className="px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold transition duration-300 shadow-lg hover:scale-105"
+            className="h-14 px-7 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
           >
             Send
           </button>

@@ -10,57 +10,63 @@ const App = () => {
 
   return (
     <>
-      <div className="h-screen overflow-hidden flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
+      <Header />
+
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black flex items-center justify-center px-4 py-8">
         
-        <Header />
-
-        <div className="flex-1 flex items-center justify-center px-4 py-4 overflow-hidden">
+        <div
+          className={`w-full transition-all duration-500 ${
+            joined ? "max-w-6xl" : "max-w-md"
+          }`}
+        >
           
-          <div
-            className={`w-full ${
-              joined ? "max-w-6xl h-full" : "max-w-md"
-            } bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-6 md:p-8 transition-all duration-300 overflow-hidden`}
-          >
-            
-            {!joined ? (
-              <div className="flex flex-col gap-6">
+          {!joined ? (
+            <div className="bg-white/10 backdrop-blur-2xl border border-white/10 rounded-[32px] shadow-[0_8px_40px_rgba(0,0,0,0.45)] p-8 md:p-10">
+              
+              <div className="text-center mb-8">
                 
-                <div className="text-center">
-                  <h2 className="text-3xl font-bold text-white mb-2">
-                    Welcome Back
-                  </h2>
-
-                  <p className="text-slate-300 text-sm md:text-base">
-                    Join the anonymous help community and start chatting.
-                  </p>
+                <div className="w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center mx-auto mb-5">
+                  <span className="text-4xl text-white font-bold">A</span>
                 </div>
 
+                <h2 className="text-4xl font-bold text-white mb-3">
+                  Welcome Back
+                </h2>
+
+                <p className="text-slate-400 leading-relaxed">
+                  Join the anonymous help community and start chatting with people around the world.
+                </p>
+              </div>
+
+              <div className="space-y-5">
+                
                 <input
                   type="text"
                   placeholder="Enter your name..."
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/10 border border-slate-500 text-white placeholder:text-slate-300 outline-none focus:ring-2 focus:ring-cyan-400 transition duration-300"
+                  className="w-full h-14 px-5 rounded-2xl bg-white/10 border border-white/10 text-white placeholder:text-slate-400 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-all duration-300"
                 />
 
                 <button
                   onClick={() => setJoined(true)}
-                  className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold py-3 rounded-xl transition duration-300 shadow-lg hover:scale-[1.02]"
+                  className="w-full h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold text-lg shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Join Chat
                 </button>
+
               </div>
-            ) : (
-              <div className="h-full overflow-hidden">
-                <Chat username={username} />
-              </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="h-[85vh] overflow-hidden rounded-[32px]">
+              <Chat username={username} />
+            </div>
+          )}
 
         </div>
 
-        <Footer />
-
       </div>
+
+      <Footer />
     </>
   );
 };

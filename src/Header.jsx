@@ -6,11 +6,7 @@ function Header() {
           
           <div className="right">
             <h3 className="text-2xl md:text-3xl font-bold tracking-wide text-center md:text-left">
-<<<<<<< HEAD
-              AnonSpace
-=======
-              AnonSpace 
->>>>>>> 7241fac47b7070379844a8c761615b6e6b272172
+AnonSpace
             </h3>
           </div>
 
