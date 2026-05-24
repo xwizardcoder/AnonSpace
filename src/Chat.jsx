@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 
 const socket = io("https://chat-app-backend-kvih.onrender.com");
@@ -6,6 +6,8 @@ const socket = io("https://chat-app-backend-kvih.onrender.com");
 const Chat = ({ username }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     socket.emit("user_joined", username);
@@ -18,6 +20,12 @@ const Chat = ({ username }) => {
       socket.off("receive_message");
     };
   }, [username]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
 
   const sendMessage = () => {
     if (message.trim() !== "") {
@@ -41,6 +49,7 @@ const Chat = ({ username }) => {
           <h2 className="text-white text-xl font-bold">
             Community Chat
           </h2>
+
           <p className="text-slate-300 text-sm">
             Connected as {username}
           </p>
@@ -55,7 +64,7 @@ const Chat = ({ username }) => {
           <div className="h-full flex items-center justify-center text-slate-400 text-center">
             <p>
               No messages yet. <br />
-              Start the conversation 
+              Start the conversation
             </p>
           </div>
         ) : (
@@ -86,6 +95,8 @@ const Chat = ({ username }) => {
             </div>
           ))
         )}
+
+        <div ref={messagesEndRef}></div>
       </div>
 
       <div className="p-4 border-t border-white/10 bg-slate-900/70">
