@@ -18,7 +18,7 @@ const App = () => {
           
           <div
             className={`w-full ${
-              joined ? "max-w-6xl h-full" : "max-w-md"
+              joined ? "max-w-6xl h-[85vh]" : "max-w-md"
             } bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-6 md:p-8 transition-all duration-300 overflow-hidden`}
           >
             
