@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
 
@@ -7,8 +7,6 @@ const socket = io("https://chat-app-backend-kvih.onrender.com");
 const Chat = ({ username }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-
-  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     socket.emit("user_joined", username);
@@ -21,12 +19,6 @@ const Chat = ({ username }) => {
       socket.off("receive_message");
     };
   }, [username]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [messages]);
 
   const sendMessage = () => {
     if (message.trim() !== "") {
@@ -74,7 +66,7 @@ const Chat = ({ username }) => {
           <div className="h-full flex flex-col items-center justify-center text-center">
             
             <div className="w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center mb-5">
-              <span className="text-4xl">💬</span>
+              <span className="text-4xl text-white font-bold">R</span>
             </div>
 
             <h3 className="text-white text-xl font-semibold mb-2">
@@ -119,8 +111,6 @@ const Chat = ({ username }) => {
             </div>
           ))
         )}
-
-        <div ref={messagesEndRef}></div>
       </div>
 
       <div className="p-4 md:p-5 border-t border-white/10 bg-slate-950/40 backdrop-blur-xl">
